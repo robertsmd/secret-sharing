@@ -9,9 +9,9 @@ from setuptools import setup
 setup(
     name='secretsharing',
     version='0.3.7',
-    url='https://github.com/mroberts/secret-sharing',
+    url='https://github.com/robertsmd/secret-sharing',
     license='MIT',
-    author='mroberts',
+    author='robertsmd',
     author_email='',
     description=("Tools for sharing secrets (like Bitcoin private keys), "
                  "using shamir's secret sharing scheme."),
