@@ -7,8 +7,7 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from utilitybelt import secure_randint as randint
-
+from .entropy import randint
 
 def egcd(a, b):
     if a == 0:
@@ -17,7 +16,6 @@ def egcd(a, b):
         g, y, x = egcd(b % a, a)
         return (g, x - (b // a) * y, y)
 
-
 def mod_inverse(k, prime):
     k = k % prime
     if k < 0:
@@ -25,7 +23,6 @@ def mod_inverse(k, prime):
     else:
         r = egcd(prime, k)[2]
     return (prime + r) % prime
-
 
 def random_polynomial(degree, intercept, upper_bound):
     """ Generates a random polynomial with positive coefficients.
@@ -37,7 +34,6 @@ def random_polynomial(degree, intercept, upper_bound):
         random_coeff = randint(0, upper_bound-1)
         coefficients.append(random_coeff)
     return coefficients
-
 
 def get_polynomial_points(coefficients, num_points, prime):
     """ Calculates the first n polynomial points.
@@ -56,7 +52,6 @@ def get_polynomial_points(coefficients, num_points, prime):
         points.append((x, y))
     return points
 
-
 def modular_lagrange_interpolation(x, points, prime):
     # break the points up into lists of x and y values
     x_values, y_values = zip(*points)
@@ -67,13 +62,12 @@ def modular_lagrange_interpolation(x, points, prime):
         numerator, denominator = 1, 1
         for j in range(len(points)):
             # don't compute a polynomial fraction if i equals j
-            if i == j:
-                continue
-            # compute a fraction & update the existing numerator + denominator
+            if i == j: continue
+            # compute a fraction and update the existing numerator + denominator
             numerator = (numerator * (x - x_values[j])) % prime
             denominator = (denominator * (x_values[i] - x_values[j])) % prime
-        # get the polynomial from the numerator + denominator mod inverse
+        # get the polynomial from the numerator + mod inverse of the denominator
         lagrange_polynomial = numerator * mod_inverse(denominator, prime)
-        # multiply the current y & the evaluated polynomial & add it to f(x)
+        # multiply the current y and the evaluated polynomial and add it to f(x)
         f_x = (prime + f_x + (y_values[i] * lagrange_polynomial)) % prime
     return f_x
