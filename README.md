@@ -7,7 +7,7 @@ Secret Sharing
 [![PyPI](https://img.shields.io/pypi/l/secretsharing.svg)](https://github.com/onenameio/secret-sharing/blob/master/LICENSE)
 [![Slack](http://slack.blockstack.org/badge.svg)](http://slack.blockstack.org/)
 
-A library for sharding and sharing secrets (like Bitcoin private keys), using shamir's secret sharing scheme.
+A library for sharding and sharing secrets (like Bitcoin private keys), using shamir's secret sharing scheme. **UPDATED TO WORK WITH PYTHON 3.7**
 
 ## Installation
 
