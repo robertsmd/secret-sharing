@@ -26,9 +26,11 @@ def int_to_charset(x, charset):
 def charset_to_int(s, charset):
     """ Turn a string into a non-negative integer.
     """
-    if not isinstance(s, (str)):
+    if isinstance(s, (bytes)):
         s = str(s)[2:-1]
-        # raise ValueError("s must be a string.")
+    if not isinstance(s, (str)):
+        print(type(s))
+        raise ValueError("s must be a string.")
     if (set(s) - set(charset)):
         raise ValueError("s has chars that aren't in the charset.")
     output = 0
@@ -42,6 +44,21 @@ def change_charset(s, original_charset, target_charset):
     intermediate_integer = charset_to_int(s, original_charset)
     output_string = int_to_charset(intermediate_integer, target_charset)
     return output_string
+
+def is_hex(s):
+    # make sure that s is a string
+    if not isinstance(s, str):
+        return False
+    # if there's a leading hex string indicator, strip it
+    if s[0:2] == '0x':
+        s = s[2:]
+    # try to cast the string as an int
+    try:
+        i = hex_to_int(s)
+    except ValueError:
+        return False
+    else:
+        return True
 
 """ Base16 includes numeric digits and the letters a through f. Here,
     we use the lowecase letters.
